@@ -1,0 +1,236 @@
+/* Navbar.css - Updated for Paletta */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar:hover {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo Styling */
+.heading .logo {
+  text-decoration: none;
+  color: white;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.heading .logo:hover {
+  transform: scale(1.05);
+}
+
+.heading h3 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+/* Optional: Add a subtle glow effect to logo */
+.heading h3::after {
+  content: 'Paletta';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(255, 255, 255, 0.3);
+  filter: blur(10px);
+  z-index: -1;
+}
+
+/* Links Container */
+.links ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 1rem;
+}
+
+.links ul a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.7rem 1.3rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  position: relative;
+  /* background: rgba(255, 255, 255, 0.1); */
+  backdrop-filter: blur(10px);
+}
+
+.links ul a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.links ul a.active {
+  color: white;
+  background: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.links ul a li {
+  list-style: none;
+}
+
+/* Sign-up Button */
+.links ul a button {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.links ul a button:hover {
+  background: #f8f9ff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.4);
+  color: #764ba2;
+}
+
+.links ul a button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.3);
+}
+/* Logout Button Styling */
+.logout-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #ff5252 0%, #e63946 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(255, 107, 107, 0.5);
+}
+
+.logout-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+}
+
+/* Responsive styling for logout button */
+@media screen and (max-width: 768px) {
+  .logout-btn {
+    padding: 0.65rem 1.8rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logout-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .heading h3 {
+    font-size: 1.8rem;
+  }
+
+  .links ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .links ul a {
+    font-size: 1rem;
+    padding: 0.6rem 1.1rem;
+  }
+
+  .links ul a button {
+    padding: 0.65rem 1.8rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .heading h3 {
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+  }
+
+  .links ul {
+    gap: 0.6rem;
+    width: 100%;
+  }
+
+  .links ul a {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    flex: 1;
+    text-align: center;
+  }
+
+  .links ul a button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+}
+
+/* Alternative: Glass Morphism Style for Links */
+.links ul a.glass-style {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.links ul a.glass-style:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
