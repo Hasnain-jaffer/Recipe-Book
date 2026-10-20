@@ -39,7 +39,6 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <NavLink to="/" className="logo" onClick={() => setMenuOpen(false)}>
-          <span className="logo-dot"></span>
           <h3>Paletta</h3>
         </NavLink>
 
