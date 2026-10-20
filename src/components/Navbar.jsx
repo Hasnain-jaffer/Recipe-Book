@@ -1,70 +1,97 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from "react-router-dom"; 
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const updateUser = () => {
-    const user = JSON.parse(localStorage.getItem('currentUser')) || 
+    const user = JSON.parse(localStorage.getItem('currentUser')) ||
                  JSON.parse(sessionStorage.getItem('currentUser'));
     setCurrentUser(user);
   };
 
   useEffect(() => {
     updateUser();
-
-    // Listen for storage changes (login/logout from other tabs/components)
     window.addEventListener('storage', updateUser);
-    
-    // Listen for custom user update event (for same-page updates)
     window.addEventListener('userUpdated', updateUser);
-    
     return () => {
       window.removeEventListener('storage', updateUser);
       window.removeEventListener('userUpdated', updateUser);
     };
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    const close = () => setMenuOpen(false);
+    window.addEventListener('userUpdated', close);
+    return () => window.removeEventListener('userUpdated', close);
+  }, []);
+
   const handleLogout = () => {
-    // Confirmation dialog before logout
-    const confirmLogout = window.confirm('Are you sure you want to logout?');
-    
-    if (confirmLogout) {
+    if (window.confirm('Are you sure you want to logout?')) {
       localStorage.removeItem('currentUser');
       sessionStorage.removeItem('currentUser');
       setCurrentUser(null);
-
-      // Trigger both events to update Navbar everywhere
+      setMenuOpen(false);
       window.dispatchEvent(new Event('storage'));
       window.dispatchEvent(new Event('userUpdated'));
-
       navigate('/login');
     }
   };
 
   return (
-    <nav className="navbar">
-      <div className="heading">
-        <NavLink to="/" className="logo"><h3>Paletta</h3></NavLink>
-      </div>
-      <div className="links">
-        <ul>
-          <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')}><li>Home</li></NavLink>
-          <NavLink to="/Category" className={({ isActive }) => (isActive ? 'active' : '')}><li>Category</li></NavLink>
-          <NavLink to="/Meal" className={({ isActive }) => (isActive ? 'active' : '')}><li>Meal</li></NavLink>
+    <nav className={`navbar ${menuOpen ? 'nav-open' : ''}`}>
+      <div className="nav-container">
+        <NavLink to="/" className="logo" onClick={() => setMenuOpen(false)}>
+          <h3>Paletta</h3>
+        </NavLink>
+
+        <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
+          <li>
+            <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMenuOpen(false)}>
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/Category" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMenuOpen(false)}>
+              Category
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/Meal" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMenuOpen(false)}>
+              Meal
+            </NavLink>
+          </li>
 
           {!currentUser && (
-            <NavLink to="/Signup" className={({ isActive }) => (isActive ? 'active' : '')}>
-              <button>Sign Up</button>
-            </NavLink>
+            <li>
+              <NavLink to="/Signup" onClick={() => setMenuOpen(false)}>
+                <button className="signup-btn">Sign Up</button>
+              </NavLink>
+            </li>
           )}
 
           {currentUser && (
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
+            <li>
+              <button onClick={handleLogout} className="logout-btn">
+                Logout
+              </button>
+            </li>
           )}
         </ul>
+
+        <button
+          className={`hamburger ${menuOpen ? 'active' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </nav>
   );
